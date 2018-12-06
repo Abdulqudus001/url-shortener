@@ -27,6 +27,7 @@ div.popup {
   position: absolute;
   top: 0;
   background: rgba(50, 50, 50, 0.4);
+  display: none;
 }
 
 div.content {
@@ -35,6 +36,24 @@ div.content {
   height: 50%;
   margin: 15% auto;
   border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.fancy-loader {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.fancy-loader span {
+  position: absolute;
+  top: 42%;
+  left: 25%;
+  color: #4b4747;
+  font-size: 1.8rem;
+  font-weight: 200;
 }
 
 .myinput:focus {
