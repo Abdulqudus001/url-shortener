@@ -6,10 +6,24 @@
   <title>URL shortener</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500">
 </head>
 <body>
-  
+  <div class="body">
+    <label for="url">Enter your long url</label>
+    <input type="url" name="url" id="url" class="myinput" placeholder="e.g https://www.google.com"><br>
 
+    <label for="shortened">Enter your shortened url</label>
+    <input type="url" name="url" id="shortened" class="myinput" placeholder="e.g myurlshortener/visitus">
+  </div>
+
+  <div class="popup">
+    <div class="content">
+      <p>Heres your url</p>
+    </div>
+  </div>
+
+  <script src="./js/config.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>

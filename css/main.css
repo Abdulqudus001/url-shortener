@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  font-family: roboto;
+  color: #289bc2;
+}
+
+div.body {
+  width: 80vw;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.myinput {
+  outline: none;
+  border-radius: 8px;
+  padding: 10px;
+  width: 60vw;
+  box-shadow: none;
+  border: 2px solid #e3e3e3;
+}
+
+div.popup {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background: rgba(50, 50, 50, 0.4);
+}
+
+div.content {
+  background: #fff;
+  width: 50%;
+  height: 50%;
+  margin: 15% auto;
+  border-radius: 8px;
+}
+
+.myinput:focus {
+  border: 2px solid #289bc2;
+}
+
+@media (min-width: 680px) {
+  div.body {
+    width: 60%;
+  }
+  .myinput {
+    width: 75%;
+  }
+}
