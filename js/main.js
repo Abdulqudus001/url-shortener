@@ -13,17 +13,27 @@ db.settings({
   timestampsInSnapshots: true
 });
 
+let arrayOfData = [];
+
+popup.style.display = 'block';
+loader.style.display = 'block';
+popupContent.style.display = 'none';
+
 // Get length of collection on first load
 db.collection('urls').get().then((snapshots) => {
   snapshots.forEach(snapshot => {
     initialIndex += 1;
+    arrayOfData.push(snapshot.data());
   });
+  popup.style.display = 'none';
+  loader.style.display = 'none';
 });
 
 
 let urlField = document.getElementById('url');
 
 urlField.addEventListener('keypress', (event) => {
+  let dataExists = false, indexOfData = 0;
   if (event.keyCode === 13) {
     if (is_url(urlField.value)) {
       popup.style.display = 'block';
@@ -34,18 +44,34 @@ urlField.addEventListener('keypress', (event) => {
         longUrl: urlField.value,
         shortUrl: `myurlshortener/${btoa(initialIndex)}`,
         createdAt: new Date().toLocaleDateString()
-      }
+      };
+      console.log(arrayOfData);
+      arrayOfData.forEach((data, index) => {
+        if (data.longUrl === firebaseDocument.longUrl) {
+          dataExists = true;
+        } else {
+          dataExists = false;
+        }
+      });
 
-      db.collection('urls').doc(initialIndex.toString()).set(firebaseDocument)
-      .then((success) => {
-        console.log('Saved to database');
+      if (!dataExists) { 
+        db.collection('urls').doc(initialIndex.toString()).set(firebaseDocument)
+        .then((success) => {
+          console.log('Saved to database');
+          loader.style.display = 'none';
+          popupContent.style.display = 'block';
+          initialIndex++;
+          document.getElementById('urlField').value = firebaseDocument.shortUrl;
+          console.log(firebaseDocument.shortUrl);
+        }).catch((error) => {
+          console.log('Something went wrong' + error);
+        });
+      } else {
         loader.style.display = 'none';
         popupContent.style.display = 'block';
         initialIndex++;
-        console.log(firebaseDocument.shortUrl);
-      }).catch((error) => {
-        console.log('Something went wrong' + error);
-      });
+        document.getElementById('urlField').value = arrayOfData[indexOfData].shortUrl;
+      }
 
     }
   }
@@ -56,10 +82,15 @@ let shortenedUrlField = document.getElementById('shortened');
 // the block retrives the long url from firebase
 shortenedUrlField.addEventListener('keypress', (event) => {
   if (event.keyCode === 13) {
+    popup.style.display = 'block';
+    loader.style.display = 'block';
+    popupContent.style.display = 'none';
     db.collection('urls').where('shortUrl', '==', shortenedUrlField.value).get()
     .then((doc) => {
       doc.forEach((item) => {
-        console.log(item.data().longUrl);
+        loader.style.display = 'none';
+        popupContent.style.display = 'block';
+        document.getElementById('urlField').value = item.data().longUrl;
       })
     }).catch((error) => {
       console.log('Something went wrong' + error);
@@ -78,4 +109,13 @@ function is_url(str)
 
 function closePopup () {
   popup.style.display = 'none';
+  document.getElementById('copy').innerHTML = 'Click the text to copy';
+}
+
+function copyToClipboard (id) {
+  let inputField = document.getElementById(id);
+  let text = document.getElementById('copy');
+  inputField.select();
+  document.execCommand('copy');
+  text.innerHTML = 'Copied';
 }

@@ -19,6 +19,7 @@ div.body {
   width: 60vw;
   box-shadow: none;
   border: 2px solid #e3e3e3;
+  margin: 30px;
 }
 
 div.popup {
@@ -59,6 +60,12 @@ div.content {
 .myinput:focus {
   border: 2px solid #289bc2;
 }
+
+.result {
+  width: 80%;
+  margin: 0 auto;
+}
+
 
 @media (min-width: 680px) {
   div.body {
